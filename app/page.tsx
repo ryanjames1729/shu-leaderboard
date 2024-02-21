@@ -32,12 +32,12 @@ export default function Home() {
         <div id="houses" className="w-full h-full">
             <Bar
               data={{
-                labels: ['East', 'West'],
+                labels: ['Blue', 'Red'],
                 datasets: [
                   {
                     label: "US House Points",
                     data: [100, 200],
-                    backgroundColor: ["rgba(0,255,0,0.3)", "rgba(255,0,0,0.3)"],
+                    backgroundColor: ["rgba(0,0,255,0.3)", "rgba(255,0,0,0.3)"],
                     borderColor: "red",
                     borderWidth: 2,
                     hoverBorderWidth: 3,
