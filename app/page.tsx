@@ -1,5 +1,5 @@
 'use client'
-
+import { GraphQLClient } from 'graphql-request'
 import Image from "next/image";
 import Footer from "./components/Footer";
 
@@ -11,8 +11,37 @@ Chart.register(BarElement);
 Chart.defaults.color = "rgba(255,255,255,0.3)";
 Chart.defaults.font.size = 16;
 
+async function getHouses() {
+  const GRAPHCMS_URL_ENDPOINT = 'https://api-us-east-1-shared-usea1-02.hygraph.com/v2/clsz49doe000008laga4i162u/master'
+  const graphcms = new GraphQLClient(GRAPHCMS_URL_ENDPOINT)
 
-export default function Home() {
+  const { houseEntries }: { houseEntries: Array<{ houseName: string, housePoints: number }> } = await graphcms.request(
+    `
+    query HouseEntries {
+      houseEntries {
+        houseName
+        housePoints
+      }
+    }
+    `
+  )
+
+  // console.log('async function getHouses()')
+  // console.log(houseEntries)
+ 
+
+  return houseEntries
+}
+
+export default async function Home() {
+
+  const houseData: Array<{ houseName: string, housePoints: number }> = await getHouses();
+
+  const houseName1 = houseData[0].houseName;
+  const housePoints1 = houseData[0].housePoints;
+  const houseName2 = houseData[1].houseName;
+  const housePoints2 = houseData[1].housePoints;
+
   return (
     <>
     <main className="font-primary bg-gradient-to-r from-primary via-fuchsia-500 to-secondary text-slate-700 flex min-h-screen flex-col items-center justify-between lg:p-24 py-24">
@@ -32,11 +61,11 @@ export default function Home() {
         <div id="houses" className="w-full h-full">
             <Bar
               data={{
-                labels: ['Blue', 'Red'],
+                labels: [houseName2, houseName1],
                 datasets: [
                   {
-                    label: "US House Points",
-                    data: [100, 200],
+                    label: "SHU Points",
+                    data: [housePoints2, housePoints1],
                     backgroundColor: ["rgba(0,0,255,0.3)", "rgba(255,0,0,0.3)"],
                     borderColor: "red",
                     borderWidth: 2,
