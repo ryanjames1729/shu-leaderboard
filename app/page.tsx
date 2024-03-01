@@ -26,10 +26,6 @@ async function getHouses() {
     `
   )
 
-  // console.log('async function getHouses()')
-  // console.log(houseEntries)
- 
-
   return houseEntries
 }
 
