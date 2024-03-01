@@ -63,14 +63,14 @@ export async function updatePoints(bluePoints: string, redPoints: string) {
     try {
         const { result }: any = await graphQLClient.request(query, {bluePointsPost, redPointsPost})
         console.log('result', result)
-        return result
+        return "result"
     }
     catch (error) {
         console.error('error', error)
     }
-    finally {
-        redirect('/')
-    }
+    // finally {
+    //     redirect('/')
+    // }
 
     return {bluePointsPost, redPointsPost}
 

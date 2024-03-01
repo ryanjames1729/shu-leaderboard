@@ -8,7 +8,7 @@ import Form from "../components/Form";
 
 
 //import { auth, User } from "@clerk/nextjs/server";
-import { useOrganization, useUser, Protect, ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton, SignOutButton } from "@clerk/nextjs";
+import { useOrganization, useUser, Protect, ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton, SignOutButton, currentUser } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs";
 import ShowPoints from '../components/ShowPoints';
 
@@ -17,8 +17,13 @@ export default async function Home() {
 
     const { userId } = auth();
     const adminList = ["user_2d5q19e1ZVAOxJGvF3JDq3LjUW3"]
+
+    const { orgRole } = auth();
+
+    const user = await currentUser();
   
   return (
+    <>
     
 <main className="font-primary bg-secondary text-primary flex min-h-screen flex-col items-center justify-between lg:p-24 py-24">
       <div className="relative flex place-items-center flex-col -mt-12 w-96 lg:w-auto">
@@ -30,6 +35,7 @@ export default async function Home() {
         <UserButton afterSignOutUrl="/"/> 
         {/* <p>{userId}</p> */}
         <SignOutButton />
+        <h2 className="lg:text-4xl text-xl">Welcome {user?.firstName}</h2>
         </SignedIn>
         
         </div>
@@ -51,13 +57,9 @@ export default async function Home() {
       </div>
       </div>
 
-      
-
-
-      <p className="lg:mt-20 lg:text-lg text-sm text-center w-96 px-0 pt-20 mb-0 text-slate-400">This page was built by Ryan James.</p>
-        <Footer />
     </main>
-    
+    <Footer/>
+    </>   
     
   )
 }
